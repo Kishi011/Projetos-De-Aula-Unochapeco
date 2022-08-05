@@ -1,1 +1,3 @@
-alert ("Script funcionando!");
+function ButtonClick() {
+    alert("Script funcionando!");    
+}
