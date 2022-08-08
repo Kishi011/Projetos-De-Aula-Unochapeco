@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+
+    </body>
+
+    <script>
+        
+        function exibeAlerta(texto)
+        {
+            alert(texto);
+        }
+
+        var tentativas = 5;
+
+        var login = "vini";
+        var senha = "123";
+
+        while(loginInformado != login && senhaInformada != senha && tentativas > 0)
+        {
+            var loginInformado = prompt("Login");
+            var senhaInformada = prompt("Senha");
+
+            if(loginInformado == login && senhaInformada == senha)
+            {
+                exibeAlerta("Acesso concedido!");
+                document.write("Bem vindo!");
+            }
+            else
+            {
+                tentativas -= 1;
+
+                if(tentativas <= 0)
+                {
+                    exibeAlerta("As suas tentativas acabaram, seu acesso foi negado!");
+                    document.write("Acesso bloqueado!");
+
+                    break;
+                }
+                else
+                {
+                    exibeAlerta("O login ou a senha estão incorretos, você ainda tem "+ tentativas + " tentativas restantes");
+                }
+            }
+        }
+
+    </script>
+</html>

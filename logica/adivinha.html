@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+
+    </body>
+
+    <script>
+
+        function pulaLinha()
+        {
+            document.write("<br><br>");
+        }
+        
+        function exibeTexto(texto)
+        {
+            document.write(texto);
+            pulaLinha();
+        }
+
+        function SorteiaNumero()
+        {
+            return Math.round(Math.random() * 10);
+        }
+
+        var numero = SorteiaNumero();
+
+        var tentativas = 3;
+
+        while (tentativas > 0) {
+
+            var chute = parseInt(prompt("Dê o seu chute"));
+
+            if(chute == numero)
+            {
+                exibeTexto("Você acertou, o número pensado foi: " + numero);
+
+                break;
+            }
+            else
+            {
+                exibeTexto("Você errou, ainda tem " + tentativas + " tentativas");
+            }
+
+            tentativas--;
+            
+        }
+
+        
+
+    </script>
+</html>

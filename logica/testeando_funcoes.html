@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+
+    </body>
+
+    <script>
+
+        function pulaLinha()
+        {
+            document.write("<br><hr><br>");
+        }
+        
+        function imprime(texto)
+        {
+            document.write(texto);
+            pulaLinha();
+        }
+
+        function exibeTexto(diferencaIdade)
+        {
+            document.write("A diferença de idade entre eu e o meu irmão é de " + diferencaIdade + " anos");
+        }
+
+        var ano = 2016;
+
+        imprime("Flávio tem " + (ano - 1977) + " anos");
+
+        imprime("Flávio tem " + (ano - 1996) + " anos");
+
+        ano = 2017;
+        imprime("Flávio tem " + (ano - 1976) + " anos<br><br><br>");
+
+        pulaLinha();
+
+        exibeTexto(6);
+
+    </script>
+</html>
