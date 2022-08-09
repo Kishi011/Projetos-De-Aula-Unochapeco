@@ -12,26 +12,60 @@
     </body>
 
     <script>
-
-        input.focus();
         
-        function Sorteia()
-        {
-            return Math.round(Math.random()*10);
+        function Sorteia(){
+            
+            return Math.round(Math.random() * 10);
         }
 
-        function Segredo()
+        function SorteiaNumeros(quantidade)
         {
-            var segredo = Sorteia();
-            var input = document.querySelector("input");
+            var segredos = [];
 
-            if(input.value == segredo)
-            {
-                alert("Você acertou!");
+            var repeticao = 0;
+
+            while(repeticao < quantidade){
+
+                var achou = false;
+                var numeroAleatorio = Sorteia();
+                
+                for(var posicao = 0; posicao < segredos.length; posicao++){
+
+                    if(segredos[posicao] == numeroAleatorio){
+
+                        achou = true;
+                        break;
+                    }
+                }
+
+                if(!achou){
+
+                    segredos.push(numeroAleatorio);
+                    repeticao++;
+                }
             }
-            else
+
+            return segredos;
+        }
+
+        function Segredo(){
+
+            var segredos = GuardaNumeros();
+            var achou = false;
+
+            for(var i = 0; i < segredos.length; i++){
+
+                if(input.value == segredos[i]){
+
+                    achou = true;
+                    alert("Você acertou!");
+                    break;
+                }                
+            }
+            
+            if(achou == false)
             {
-                alert("Você errou! O número era " + segredo);
+                alert("Você errou!");
             }
 
             input.value = null;
@@ -39,6 +73,19 @@
             //retorna o "foco" para o input
             input.focus();
         }
+
+        function GuardaNumeros(){
+
+            var quantidadeDeNumeros = 5
+            var segredos = SorteiaNumeros(quantidadeDeNumeros);
+
+            return segredos;
+        }
+
+        var input = document.querySelector("input");
+
+        //Quando a página é recarregada o campo do input já é selecionado
+        input.focus();
 
         var bt = document.querySelector("button");
 
