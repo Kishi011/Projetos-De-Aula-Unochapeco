@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <canvas width="600" height="400"></canvas>
+    </body>
+
+    <script>
+        //criando as variáveis de tela e pincel e atribuindo as tags
+        var tela = document.querySelector('canvas');
+        var pincel = tela.getContext('2d');
+
+        pincel.fillStyle = 'red';
+        pincel.fillRect(0, 0, tela.width, tela.height/3);
+        pincel.fillStyle = 'white';
+        pincel.fillRect(0, tela.height/3, tela.width, tela.height/3);
+        pincel.fillStyle = 'blue';
+        pincel.fillRect(0, tela.height/3*2, tela.width, tela.height/3);
+
+        //pintando um triângulo amarelo na parte de cima
+        pincel.fillStyle = 'yellow';
+        pincel.beginPath();
+        pincel.moveTo(tela.width/2, tela.height/2);
+        pincel.lineTo(tela.width/3, tela.height/3);
+        pincel.lineTo(tela.width/3*2, tela.height/3);
+        pincel.fill();
+
+        //pintando um trinângulo amarelo na parte de baixo
+        pincel.lineTo(tela.width/3, tela.height/3*2);
+        pincel.lineTo(tela.width/3*2, tela.height/3*2);
+        pincel.fill();
+
+        //pintando círculos no desenho
+        pincel.fillStyle = 'black';
+        pincel.beginPath();
+        pincel.arc(tela.width/3, tela.height/2, 50, 0, 2*3.14);
+        pincel.fill();
+        
+        pincel.arc(tela.width/3*2, tela.height/2, 50, 0, 2*3.14);
+        pincel.fill();
+    </script>
+</html>
