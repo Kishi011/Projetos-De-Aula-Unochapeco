@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas width="600" height="400"></canvas>
+    </body>
+
+    <script>
+
+        function desenhaCirculo(x, y, raio, cor){
+            pen.fillStyle = cor;
+            pen.beginPath();
+            pen.arc(x, y, raio, 0, 2*Math.PI);
+            pen.fill();
+        }
+        function desenhaFlor(x, y){
+            desenhaCirculo(x, y, 10, 'red');
+            desenhaCirculo(x-20, y, 10, 'orange');
+            desenhaCirculo(x+20, y, 10, 'black');
+            desenhaCirculo(x, y-20, 10, 'yellow');
+            desenhaCirculo(x, y+20, 10, 'blue');
+        }
+        
+        var canvas = document.querySelector('canvas');
+        var pen = canvas.getContext('2d');
+
+        pen.fillStyle = 'lightgray';
+        pen.fillRect(0, 0, canvas.width, canvas.height);
+
+        desenhaFlor(300, 200);
+        
+    </script>
+</html>

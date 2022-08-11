@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <canvas width="600" height="400"></canvas>
+    </body>
+
+    <script>
+        var canvas = document.querySelector('canvas');
+        var pen = canvas.getContext('2d');
+
+        pen.fillStyle = 'green';
+        pen.fillRect(0, 0, canvas.width, canvas.height);
+
+        pen.fillStyle = 'yellow';
+        pen.beginPath();
+        pen.moveTo(canvas.width/2, canvas.height/8);
+        pen.lineTo(canvas.width/10, canvas.height/2);
+        pen.lineTo(canvas.width/2, canvas.height/8*7);
+        pen.fill();
+
+        pen.moveTo(canvas.width/2, canvas.height/8);
+        pen.lineTo(canvas.width/10*9, canvas.height/2);
+        pen.lineTo(canvas.width/2, canvas.height/8*7);
+        pen.fill();
+
+        pen.fillStyle = 'darkblue';
+        pen.beginPath();
+        pen.arc(canvas.width/2, canvas.height/2, 100, 0, 2*3.14);
+        pen.fill();
+
+    </script>
+</html>
