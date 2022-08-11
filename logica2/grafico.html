@@ -16,11 +16,19 @@
             pen.fillText(texto, x, y);
         }
 
-        function desenhaBarra(x, y, serie, cores, ano){
-            desenhaTexto(50, 40, ano, 'black');
-            for(var i = 0; i < serie.lenght; i++){
-                pen.fillStyle = cores[i];
-                pen.fillRect(x, y);
+        function desenhaRetangulo(x, y, largura, altura, cor){
+            pen.fillStyle = cor;
+            pen.fillRect(x, y, largura, altura);
+            pen.strokeRect(x, y, largura, altura);
+        }
+
+        function desenhaBarra(x, y, serie, cores, texto){
+            desenhaTexto(x, y-10, texto, 'black');
+            var somaAltura = 0;
+            for(var i = 0; i < serie.length; i++){
+                var altura = serie[i];
+                desenhaRetangulo(x, y + somaAltura, 50, altura, cores[i]);
+                somaAltura += altura;
             }
         }
 
@@ -31,6 +39,7 @@
         var cores = ['blue', 'green', 'yellow', 'red'];
 
         desenhaBarra(50, 50, serie2015, cores, '2015');
+        desenhaBarra(150, 50, serie2015, cores, '2016');
         
     </script>
 </html>
