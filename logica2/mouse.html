@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+    <body>
+        <canvas width="600" height="400"></canvas>
+    </body>
+
+    <script>
+        function unclicked(){
+            return click = false;
+        }
+
+        function clicked(){
+            return click = true;
+        }
+
+        function desenhaCirculo(evento){
+            if(click){
+                var x = evento.pageX - canvas.offsetLeft;
+                var y = evento.pageY - canvas.offsetTop;
+                pen.fillStyle = 'blue';
+                pen.beginPath();
+                pen.arc(x, y, 10, 0, 2*3.14);
+                pen.fill();
+                console.log(x + ', ' + y);
+            }
+        }
+
+        var canvas = document.querySelector('canvas');
+        var pen = canvas.getContext('2d');
+        var click = false;
+
+        pen.fillStyle = 'gray';
+        pen.fillRect(0, 0, canvas.width, canvas.height);
+
+        canvas.onmousemove = desenhaCirculo;
+        canvas.onmousedown = clicked;
+        canvas.onmouseup = unclicked;
+    </script>
+</html>
