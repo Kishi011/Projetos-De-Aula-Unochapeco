@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <canvas width="600" height="400"></canvas>
+    </body>
+    <script>
+        function desenhaCirculo(x, y, raio){
+            pen.fillStyle = 'blue';
+            pen.beginPath();
+            pen.arc(x, y, raio, 0, 2*Math.PI);
+            pen.fill();
+        }
+
+        function limpaTela(){
+            pen.clearRect(0,0, canvas.width, canvas.height);
+        }
+
+        function testaInverte(x){
+            if(x >= canvas.width-raio){
+                inverte = true;
+            }
+            if(x <= 20){
+                inverte = false;
+            }
+        }
+
+        function atualizaTela(){
+            limpaTela();
+            desenhaCirculo(x, 20, raio);
+            testaInverte(x);
+            if(inverte){
+                x--;
+            }
+            else{
+                x++;
+            }
+            console.log(inverte);
+        }
+
+        var canvas = document.querySelector('canvas');
+        var pen = canvas.getContext('2d');
+        pen.fillStyle = 'lightgray';
+        pen.fillRect(0,0, canvas.width,canvas.height);
+        var x = 20;
+        var raio = 10;
+        var inverte = false;
+
+        // for(var x = 20; x <= canvas.width; x++){
+            // limpaTela();
+            // desenhaCirculo(x, 20, 10);
+        // }
+
+        setInterval(atualizaTela, 5); // setInterval recebe uma função como parâmetro para ser executada e o tempo de intervalo entre as chamadas
+    </script>
+</html>
