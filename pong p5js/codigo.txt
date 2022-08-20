@@ -1,0 +1,51 @@
+let canvasWidth = 600;
+let canvasHeight = 400;
+
+// variáveis da bolinha
+let diametro = 30;
+let raio = diametro/2;
+
+// coordenadas
+let xBolinha = canvasWidth/2;
+let yBolinha = canvasHeight/2;
+
+// velocidade
+let velXBolinha = 5;
+let velYBolinha = 5;
+
+function quandoTocaBorda(){
+  
+  if(xBolinha + raio >= canvasWidth 
+  || xBolinha - raio <= 0){  
+
+      velXBolinha *= -1;
+    }
+
+  if(yBolinha + raio >= canvasHeight 
+  || yBolinha - raio <= 0){
+
+      velYBolinha *= -1;
+    }
+}
+
+function desenhaBolinha(){
+  
+  circle(xBolinha, yBolinha, diametro);  
+}
+
+function movimentaBolinha(){
+  
+  xBolinha += velXBolinha;
+  yBolinha += velYBolinha;
+}
+
+function setup() {
+  createCanvas(canvasWidth, canvasHeight);
+}
+
+function draw() {
+  background(0);
+  desenhaBolinha();
+  quandoTocaBorda();
+  movimentaBolinha();  
+}
