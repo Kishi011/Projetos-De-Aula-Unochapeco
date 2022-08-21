@@ -13,19 +13,60 @@ let yBolinha = canvasHeight/2;
 let velXBolinha = 5;
 let velYBolinha = 5;
 
+
+// variáveis das Raquetes
+let largura = 10;
+let altura = 90;
+let vel = 3;
+
+
+// P1
+let xP1Raquete = canvasWidth*0.02;
+let yP1Raquete = canvasHeight*0.5;
+
+
+// CPU
+let xCPURaquete = canvasWidth*0.98-largura;
+let yCPURaquete= canvasHeight*0.5;
+
+
+// funções da Bolinha
+
+function inverteDirecao(){
+  
+  velXBolinha *= -1;
+}
+
 function quandoTocaBorda(){
   
-  if(xBolinha + raio >= canvasWidth 
-  || xBolinha - raio <= 0){  
+  if(xBolinha + raio >= canvasWidth   
+     || xBolinha - raio <= 0){  
 
-      velXBolinha *= -1;
+      inverteDirecao();
     }
 
   if(yBolinha + raio >= canvasHeight 
-  || yBolinha - raio <= 0){
+     || yBolinha - raio <= 0){
 
       velYBolinha *= -1;
     }
+}
+
+function quandoTocaRaquete(){
+  
+    if(xBolinha - raio <= xP1Raquete + largura 
+    && yBolinha >= yP1Raquete-(altura/2) && yBolinha <= yP1Raquete-(altura/2) + altura
+    || xBolinha + raio >= xCPURaquete
+    && yBolinha >= yCPURaquete-(altura/2) && yBolinha <= yCPURaquete + altura){
+      
+       inverteDirecao();
+     }
+}
+
+function movimentaBolinha(){
+  
+  xBolinha += velXBolinha;
+  //yBolinha += velYBolinha;
 }
 
 function desenhaBolinha(){
@@ -33,11 +74,33 @@ function desenhaBolinha(){
   circle(xBolinha, yBolinha, diametro);  
 }
 
-function movimentaBolinha(){
+
+// funções das Raquetes
+function desenhaP1Raquete(){
   
-  xBolinha += velXBolinha;
-  yBolinha += velYBolinha;
+  rect(xP1Raquete, yP1Raquete - altura/2, largura, altura);
 }
+
+function movimentaP1Raquete(){
+  
+  if(keyIsDown(UP_ARROW)){
+     
+     yP1Raquete -= vel;
+     }
+  
+  if(keyIsDown(DOWN_ARROW)){
+     
+     yP1Raquete += vel;
+     }
+}
+
+function desenhaCPURaquete(){
+  
+  rect(xCPURaquete, yCPURaquete - altura/2, largura, altura);
+}
+
+
+
 
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
@@ -46,6 +109,10 @@ function setup() {
 function draw() {
   background(0);
   desenhaBolinha();
+  desenhaP1Raquete();
+  desenhaCPURaquete();
+  quandoTocaRaquete();
   quandoTocaBorda();
-  movimentaBolinha();  
+  movimentaBolinha();
+  movimentaP1Raquete();
 }
