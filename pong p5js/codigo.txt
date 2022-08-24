@@ -35,7 +35,7 @@ let yP1Raquete = canvasHeight*0.5;
 
 // CPU
 let xCPURaquete = canvasWidth*0.98-largura;
-let yCPURaquete = 50// canvasHeight*0.5;
+let yCPURaquete = canvasHeight*0.5;
 
 
 // funções gerais do jogo
@@ -105,7 +105,7 @@ function verificaColisaoComRaquete(x, y){
 function movimentaBolinha(){
   
   xBolinha += velXBolinha;
-  //yBolinha += velYBolinha;
+  yBolinha += velYBolinha;
 }
 
 function desenhaBolinha(){
@@ -208,7 +208,6 @@ function draw() {
   quandoTocaBorda();
   movimentaBolinha();
   movimentaP1Raquete();
-  //movimentaCPURaquete();
+  movimentaCPURaquete();
   incluiPlacar();
-  console.log(xBolinha);
 }
