@@ -6,18 +6,21 @@ let diametro = 30;
 let raio = diametro/2;
 
 // coordenadas
-let xBolinha = canvasWidth/2;
+let xBolinha = /*canvasWidth*0.05*/ canvasWidth/2;
 let yBolinha = canvasHeight/2;
 
 // velocidade
-let velXBolinha = 5;
+let direcao = 1;
+let velXBolinha = 5 * direcao;
 let velYBolinha = 5;
 
 
 // variáveis das Raquetes
 let largura = 10;
 let altura = 90;
+let meiaAltura = altura/2;
 let vel = 3;
+let colidiu = false;
 
 
 // P1
@@ -27,13 +30,14 @@ let yP1Raquete = canvasHeight*0.5;
 
 // CPU
 let xCPURaquete = canvasWidth*0.98-largura;
-let yCPURaquete= canvasHeight*0.5;
+let yCPURaquete = canvasHeight*0.5;
 
 
 // funções da Bolinha
 function inverteDirecao(){
   
-  velXBolinha *= -1;
+  console.log('inverteu');
+  return direcao *= -1;
 }
 
 function quandoTocaBorda(){
@@ -42,6 +46,7 @@ function quandoTocaBorda(){
      || xBolinha - raio <= 0){  
 
       inverteDirecao();
+      velXBolinha *= direcao;
     }
 
   if(yBolinha + raio >= canvasHeight 
@@ -54,18 +59,28 @@ function quandoTocaBorda(){
 function quandoTocaRaquete(){
   
     if(xBolinha - raio <= xP1Raquete + largura 
-    && yBolinha >= yP1Raquete-(altura/2) && yBolinha <= yP1Raquete-(altura/2) + altura
+    && yBolinha >= yP1Raquete-meiaAltura && yBolinha <= yP1Raquete+meiaAltura 
     || xBolinha + raio >= xCPURaquete
-    && yBolinha >= yCPURaquete-(altura/2) && yBolinha <= yCPURaquete + altura){
+    && yBolinha >= yCPURaquete-meiaAltura && yBolinha <= yCPURaquete+meiaAltura){
       
        inverteDirecao();
+       velXBolinha *= direcao;
      }
+}
+
+// função importada da bibliotace p5.collide2d.js
+function colideComRaquete(){
+
+  var colideP1Raquete = collideRectCircle(xP1Raquete, yP1Raquete, largura, altura, xBolinha, yBolinha, diametro);
+  if(colideP1Raquete){
+    inverteDirecao();
+  }
 }
 
 function movimentaBolinha(){
   
   xBolinha += velXBolinha;
-  //yBolinha += velYBolinha;
+  yBolinha += velYBolinha;
 }
 
 function desenhaBolinha(){
@@ -75,27 +90,81 @@ function desenhaBolinha(){
 
 
 // funções das Raquetes
-function desenhaP1Raquete(){
+function desenhaRaquete(x, y){
   
-  rect(xP1Raquete, yP1Raquete - altura/2, largura, altura);
+  rect(x, y - meiaAltura, largura, altura);
+}
+
+function raqueteColideComBorda(y, meiaAltura){
+
+  if(y - meiaAltura < 0 || y + meiaAltura > canvasHeight){
+
+    return true;
+  }
+  else{
+
+    return false;
+  }
 }
 
 function movimentaP1Raquete(){
   
-  if(keyIsDown(UP_ARROW)){
+  var colideComBorda = raqueteColideComBorda(yP1Raquete, meiaAltura);
+
+  if(!colideComBorda){
+
+    if(keyIsDown(UP_ARROW)){
      
-     yP1Raquete -= vel;
-     }
-  
-  if(keyIsDown(DOWN_ARROW)){
-     
-     yP1Raquete += vel;
-     }
+      yP1Raquete -= vel;
+    }
+   
+   if(keyIsDown(DOWN_ARROW)){
+      
+      yP1Raquete += vel;
+    }
+  }
+
+  if(colideComBorda){
+
+    if(yP1Raquete - meiaAltura < 0){
+      
+      yP1Raquete += 1;
+    }
+    if(yP1Raquete + meiaAltura > canvasHeight){
+      
+      yP1Raquete -= 1;
+    }
+  }
 }
 
-function desenhaCPURaquete(){
+function movimentaCPURaquete(){
+
+  var colideComBorda = raqueteColideComBorda(yCPURaquete, meiaAltura); 
+
+  if(!colideComBorda){
+
+    if(yBolinha - raio - 30 <= yCPURaquete-meiaAltura){
+    
+      yCPURaquete -= vel;
+    }
   
-  rect(xCPURaquete, yCPURaquete - altura/2, largura, altura);
+    if(yBolinha + raio + 30 >= yCPURaquete+meiaAltura){
+  
+      yCPURaquete += vel;
+    }
+  }
+
+  if(colideComBorda){
+
+    if(yCPURaquete - meiaAltura < 0){
+      
+      yCPURaquete += 1;
+    }
+    if(yCPURaquete + meiaAltura > canvasHeight){
+      
+      yCPURaquete -= 1;
+    }
+  }
 }
 
 
@@ -106,10 +175,12 @@ function setup() {
 function draw() {
   background(0);
   desenhaBolinha();
-  desenhaP1Raquete();
-  desenhaCPURaquete();
+  desenhaRaquete(xP1Raquete, yP1Raquete);
+  desenhaRaquete(xCPURaquete, yCPURaquete);
   quandoTocaRaquete();
+  //colideComRaquete();
   quandoTocaBorda();
   movimentaBolinha();
   movimentaP1Raquete();
+  movimentaCPURaquete();
 }
