@@ -55,7 +55,9 @@ p5.prototype.collideRectCircle = function (rx, ry, rw, rh, cx, cy, diameter) {
   if (distance <= diameter/2) {
     return true;
   }
+
   return false;
+  
 };
 
 // p5.vector version of collideRectCircle
