@@ -1,61 +1,47 @@
 #include <stdio.h>
-#include <stdbool.h>
 
 void calculaFracao(int n1, int d1, int n2, int d2, char operacao);
 void simplifica(int n, int d);
-
-int inverteValor(int n);
+int maximoDivisorComum(int m, int n);
+void simplificaNovo(int n, int d);
 
 int main() {
-    int testes;
-    char operador[testes];
-    scanf("%d", &testes);
-    int n1[testes], n2[testes], d1[testes], d2[testes];
-    char barra;
-    for(int i = 0; i < testes; i++) {
-        scanf("%d %c %d %c %d %c %d", &n1[i], &barra, &d1[i], &operador[i], &n2[i], &barra, &d2[i]);
-    }
-    for(int i = 0; i < testes; i++) {
-        calculaFracao(n1[i], d1[i], n2[i], d2[i], operador[i]);
+    int qtdCalculos;
+    char  operacao;
+    scanf("%d", &qtdCalculos);
+    int n1, n2, d1, d2;
+
+    while (qtdCalculos--) {
+        scanf("%d %*c %d %c %d %*c %d", &n1, &d1, &operacao, &n2, &d2);
+        calculaFracao(n1, d1, n2, d2, operacao);
     }
     return 0;
 }
 
-void calculaFracao(int n1, int d1, int n2, int d2, char operacao) {
-    switch(operacao) {
-        case '+': simplifica(((n1*d2) + (n2*d1)), (d1*d2)); break;
-        case '-': simplifica(((n1*d2) - (n2*d1)), (d1*d2)); break;
-        case '*': simplifica((n1*n2), (d1*d2)); break;
-        case '/': simplifica((n1*d2), (n2*d1)); break;
-        default: break;
-    }
+int maximoDivisorComum(int m, int n)
+{
+    m = m < 0 ? -m : m;
+    n = n < 0 ? -n : n;
+
+    if (m % n == 0)
+        return n;
+    else
+        return maximoDivisorComum(n, m % n);
 }
 
-void simplifica(int n, int d) {
+void simplificaNovo(int n, int d){
     printf("%d/%d ", n, d);
-    bool nEraNegativo = false;
-    bool dEraNegativo = false;
-    if(n < 0) {
-        nEraNegativo = true;
-        n *= -1;
+    int n2 = n/maximoDivisorComum(n, d);
+    int d2 = d/maximoDivisorComum(n, d);
+    printf("= %d/%d\n", n2, d2);
+}
+
+void calculaFracao(int n1, int d1, int n2, int d2, char operacao) {
+    switch(operacao) {
+        case '+': simplificaNovo(((n1*d2) + (n2*d1)), (d1*d2)); break;
+        case '-': simplificaNovo(((n1*d2) - (n2*d1)), (d1*d2)); break;
+        case '*': simplificaNovo((n1*n2), (d1*d2)); break;
+        case '/': simplificaNovo((n1*d2), (n2*d1)); break;
+        default: break;
     }
-    if(d < 0) {
-        dEraNegativo = true;
-        d *= -1;
-    }
-    int menor = n < d ? n : d;
-    for(int i = 1; i <= menor; i++) {
-        if(n %i == 0 && d %i == 0) {
-            n /= i;
-            d /= i;
-            i = 1;
-        }
-    }
-    if(nEraNegativo) {
-        n *= -1;
-    }
-    if(dEraNegativo) {
-        d *= -1;
-    }
-    printf("= %d/%d\n", n, d);
 }
