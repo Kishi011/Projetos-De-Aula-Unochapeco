@@ -24,13 +24,13 @@ void encriptar(char *s) {
     tam++;
   }
   inverte(s, tam);
-  for(int i = (int)(tam/2); i < tam; i++) {
+  for(int i = (tam/2); i < tam; i++) {
     s[i] -= 1;
   }
 }
 
 void inverte(char *s, int tam) {
-  for(int i = 0; i < (int)(tam/2); i++) {
+  for(int i = 0; i < (tam/2); i++) {
     char temp = s[i];
     s[i] = s[(tam-i)-1];
     s[(tam-i)-1] = temp;
