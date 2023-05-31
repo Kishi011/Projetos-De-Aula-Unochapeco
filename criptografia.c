@@ -16,23 +16,22 @@ int main() {
 }
 
 void encriptar(char *s) {
-  int tam = 0;
-  while(s[tam] != '\0') {
-    if(s[tam] >= 'A' && s[tam] <= 'Z' || s[tam] >= 'a' && s[tam] <= 'z') {
-      s[tam] += 3;
+  int i = 0;
+  while(s[i] != '\0') {
+    if(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z') {
+      s[i] += 3;
     }
-    tam++;
+    i++;
   }
+  int tam = ++i;
   inverte(s, tam);
-  for(int i = (tam/2); i < tam; i++) {
-    s[i] -= 1;
-  }
 }
 
 void inverte(char *s, int tam) {
-  for(int i = 0; i < (tam/2); i++) {
-    char temp = s[i];
-    s[i] = s[(tam-i)-1];
-    s[(tam-i)-1] = temp;
+  int i = 0, j = tam;
+  while(i++ < tam && --j >= 0) {
+    char c = s[i];
+    s[i] = s[j];
+    s[j] = c;
   }
 }

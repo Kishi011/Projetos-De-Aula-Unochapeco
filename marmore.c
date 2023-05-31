@@ -1,43 +1,65 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int find(int *v, int *num);
+void sort(int tam, int *vetor);
+int find(int tam, int num, int *vetor);
 
 int main() {
-    int casos = 1;
-    int qtd_marbles = 0, qtd_consultas = 0;
+    int qtd_marbles, qtd_consultas;
+    int *marbles;
     int tentativa = 0;
+    int casos = 1;
     do {
         scanf(" %d %d", &qtd_marbles, &qtd_consultas);
-        if(!(qtd_marbles <= 0 && qtd_consultas <= 0)) {
-            int marbles[qtd_marbles];
-            int tam = sizeof(marbles) / sizeof(marbles[0]);
-            for(int i = 0; i < tam; i++) {
+        if(qtd_marbles > 0 && qtd_consultas > 0) {
+            marbles = (int*) malloc(qtd_marbles * sizeof(int));
+            int tam = 0;
+            for(int i = 0; i < qtd_marbles; i++) {
                 scanf("%d", marbles+i);
+                tam++;
             }
+            sort(tam, marbles);
+            int index = 0;
+            printf("CASE# %d:\n", casos);
             for(int i = 0; i < qtd_consultas; i++) {
                 scanf("%d", &tentativa);
-                int index = find(marbles, &tentativa);
-                if(index != 0) {
-                    printf("%d found at %d\n", tentativa, index);
-                    break;
+                index = find(tam, tentativa, marbles);
+                if(index >= 0) {
+                    printf("%d found at %d\n", tentativa, index+1);
+                } else {
+                    printf("%d not found\n", tentativa);
                 }
             }
+            free(marbles);
         } else {
             break;
         }
         casos++;
     } while(1);
-    
     return 0;
 }
 
-int find(int *v, int *num) {
-    int tam = sizeof(v)/sizeof(v[0]);
-    for(int i = 0; i < tam; i++) {
-        if(*num == v[i]) {
-            return *num;
+void sort(int tam, int *vetor) {
+    int v = 0, j = 0;
+    for(int i = 1; i < tam; i++) {
+        v = vetor[i];
+        j = i - 1;
+        while(j >= 0 && vetor[j] > v) {
+            vetor[j+1] = vetor[j];
+            j--;
         }
+       vetor[j+1] = v;
     }
-    printf("%d not found\n", *num);
-    return 0;
+}
+
+int find(int tam, int num, int *vetor) {
+    int i = 0;
+    do {
+        if(vetor[i] != num) {
+            continue;
+        } else {
+            return i;
+        }
+    } while(++i < tam);
+    return -1;
 }
