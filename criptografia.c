@@ -1,41 +1,42 @@
-#include <stdio.h>
+#include "stdio.h"
 
-void encriptar(char*);
-void inverte(char*, int);
+void encriptar();
+void inverte(int);
 
+char texto[50];
 int main() {
   int testes;
-  scanf("%d ", &testes);
-  char *texto;
+  scanf("%d", &testes);
   for(int i = 0; i < testes; i++) {
-    scanf("%[^\n]%*c", texto);
+    scanf(" %[^\n]", texto);
     encriptar(texto);
     printf("%s\n", texto);
   }
   return 0;
 }
 
-void encriptar(char *s) {
-  int i = 0;
-  while(s[i] != '\0') {
-    if(s[i] >= 'A' && s[i] <= 'Z' || s[i] >= 'a' && s[i] <= 'z') {
-      s[i] += 3;
+void encriptar() {
+  int tam = 0;
+  while(texto[tam] != '\0') {
+    if(texto[tam] >= 'A' && texto[tam] <= 'Z' || texto[tam] >= 'a' && texto[tam] <= 'z') {
+      texto[tam] += 3;
     }
-    i++;
+    tam++;
   }
-  inverte(s, --i);
-  int tam = i;
-  while(tam >= i/2) {
-    s[tam--] -= 1;
+  inverte(tam);
+  int i = 0, j = tam-1;
+  while(j >= i) {
+    texto[j] -= 1;
+    j--; i++;
   }
 }
 
-void inverte(char *s, int tam) {
-  int i = 0, j = tam;
+void inverte(int tam) {
+  int i = 0,  j = tam-1;
   while(i < j) {
-    char temp = s[i];
-    s[i] = s[j];
-    s[j] = temp;
+    char aux = texto[j];
+    texto[j] = texto[i];
+    texto[i] = aux;
     i++; j--;
   }
 }
