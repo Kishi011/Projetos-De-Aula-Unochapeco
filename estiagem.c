@@ -1,11 +1,12 @@
 #include "stdio.h"
+#include "stdlib.h"
 
 int testes = -1;
 int i = 0;
 
 float media(int, int);
 
-typedef struct {
+typedef struct registro {
   int moradores;
   int consumo;
   int consumoMedia;
@@ -13,15 +14,17 @@ typedef struct {
 
 int main() {
   int contCidade = 1;
-  int moradores = 0, consumo = 0;
   int totalMoradores = 0, totalConsumo = 0;
   do {
     scanf("%d", &testes);
+    registro *r[testes];
     if(testes != 0) {
       for(i = 0; i < testes; i++) {
-        scanf("%d %d", &moradores, &consumo);
-        totalMoradores += moradores;
-        totalConsumo += consumo;
+        r[i] = malloc(sizeof(registro));
+        scanf("%d %d", &r[i]->moradores, &r[i]->consumo);
+        r[i]->consumoMedia = media(r[i]->moradores, r[i]->consumo);
+        totalMoradores += r[i]->moradores;
+        totalConsumo += r[i]->consumo;
       }
       printf("Cidade# %d:\n", contCidade);
       printf("Consumo medio: %.2f m3.\n", media(totalMoradores, totalConsumo));
