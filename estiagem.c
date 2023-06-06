@@ -5,6 +5,13 @@ int i = 0;
 
 float media(int, int);
 
+typedef struct {
+  int moradores;
+  int consumo;
+  int consumoMedia;
+} registro;
+
+
 int main() {
   int contCidade = 1;
   int moradores = 0, consumo = 0;
