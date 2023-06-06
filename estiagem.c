@@ -11,7 +11,6 @@ typedef struct {
   int consumoMedia;
 } registro;
 
-
 int main() {
   int contCidade = 1;
   int moradores = 0, consumo = 0;
