@@ -15,7 +15,7 @@ typedef struct registro {
 int main() {
   int contCidade = 1;
   int totalMoradores = 0, totalConsumo = 0;
-  do {
+  while(1) {
     scanf("%d", &testes);
     registro *r[testes];
     if(testes != 0) {
@@ -32,7 +32,7 @@ int main() {
     } else {
       break;
     }
-  } while(1);
+  }
   return 0;
 }
 
